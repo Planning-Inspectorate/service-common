@@ -1,0 +1,34 @@
+{
+  "name": "service-common",
+  "version": "1.0.0",
+  "description": "common functionality for PINS",
+  "main": "index.js",
+  "scripts": {
+    "commit": "cz",
+    "commitlint": "commitlint",
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix",
+    "format": "prettier --write './**/*.js'"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "commitizen": "^4.2.2",
+    "cz-conventional-changelog": "^3.3.0",
+    "husky": "^4.3.0",
+    "patch-package": "^6.2.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Planning-Inspectorate/service-common.git"
+  },
+  "keywords": [
+    "pins"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Planning-Inspectorate/service-common/issues"
+  },
+  "homepage": "https://github.com/Planning-Inspectorate/service-common#readme"
+}
