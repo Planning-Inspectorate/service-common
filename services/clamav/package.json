@@ -1,7 +1,7 @@
 {
-  "name": "",
+  "name": "pins-clamav",
   "version": "1.0.0",
-  "description": "",
+  "description": "common service for clam antivirus",
   "main": "index.js",
   "scripts": {
     "lint": "eslint ./",
@@ -10,6 +10,7 @@
     "test": "jest --coverage --maxWorkers=4"
   },
   "dependencies": {
+    "clamscan": "^1.4.2",
     "pino": "^6.7.0"
   },
   "devDependencies": {
@@ -29,8 +30,13 @@
     "type": "git",
     "url": "https://github.com/Planning-Inspectorate/service-common"
   },
-  "keywords": ["pins"],
-  "author": "",
+  "keywords": [
+    "antivirus",
+    "pins",
+    "security",
+    "clamav"
+  ],
+  "author": "Foundry4",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Planning-Inspectorate/service-common/issues"
