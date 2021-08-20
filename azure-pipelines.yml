@@ -1,4 +1,4 @@
-# service-common/pdf-service-pipeline
+# pins/service-common/pdf-service-pipeline
 
 trigger:
   paths:
