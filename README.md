@@ -15,8 +15,6 @@ From root run:
 From each service root run: 
 <pre><code>npm i</code></pre>
 
-TODO - Write makefile to install all services
-
 ## Use
 
 ### Committing
