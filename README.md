@@ -10,19 +10,12 @@ Each service is an NPM package.
 
 ## Installation
 
-From root run: 
-<pre><code>npm i</code></pre>
-From each service root run: 
-<pre><code>npm i</code></pre>
-
-TODO - Write makefile to install all services
-
-## Use
+From root run: `make install`
 
 ### Committing
 
 The packages for committing (Commitizen and Husky) are part of the service-common package.json. Therefore, run commits from root. Use:
-<pre><code>npm run commit</code></pre>
+`npm run commit`
 
 ### Linting, testing, logging, and prettifying
 
@@ -37,4 +30,9 @@ The packages for committing (Commitizen and Husky) are part of the service-commo
 5. Add keywords as necessary
 6. Make sure you use index.js as your entrypoint
 7. Add service src code
-8. TODO - Add instructions for adding package to npm
+
+### Adding to npm
+
+1. `npm login`
+2. Navigate to service
+3. `npm publish'
