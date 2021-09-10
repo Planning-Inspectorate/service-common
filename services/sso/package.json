@@ -1,8 +1,8 @@
 {
   "name": "pins-sso",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "single sign on for pins back-office and other services",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
