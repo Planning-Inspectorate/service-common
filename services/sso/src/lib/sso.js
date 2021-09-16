@@ -10,8 +10,8 @@ const getAzureConfig = (authConfig, logger) => {
     system: {
       loggerOptions: {
         /* istanbul ignore next */
-        loggerCallback(loglevel = "info", message) {
-          logger(loglevel, message);
+        loggerCallback(loglevel, message) {
+          logger.info({ loglevel, message }, `Logger callback`);
         },
         piiLoggingEnabled: false,
         logLevel: msal.LogLevel.Verbose,
@@ -37,7 +37,9 @@ module.exports = (app, config, logger) => {
       .then((response) => {
         res.redirect(response);
       })
-      .catch((error) => logger("info", error));
+      .catch((error) =>
+        logger.error({ error }, `Error getting authorisation url`)
+      );
   });
 
   /* istanbul ignore next */
@@ -51,11 +53,11 @@ module.exports = (app, config, logger) => {
     cca
       .acquireTokenByCode(tokenRequest)
       .then((response) => {
-        logger("info", response);
+        logger.info({ response }, `Acquiring token by code`);
         res.sendStatus(200);
       })
       .catch((error) => {
-        logger("info", error);
+        logger.error({ error }, `Error acquiring token by code`);
         res.status(500).send(error);
       });
   });
