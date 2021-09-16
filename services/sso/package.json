@@ -1,6 +1,6 @@
 {
   "name": "pins-sso",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "single sign on for pins back-office and other services",
   "main": "src/index.js",
   "scripts": {
