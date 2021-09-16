@@ -1,7 +1,7 @@
-const authenticationRouter = require("./routes/authenticationRouter");
 const ensureIsAuthenticated = require("./middleware/ensure-is-authenticated");
+const sso = require("./lib/sso");
 
 module.exports = {
-  authenticationRouter,
   ensureIsAuthenticated,
+  sso,
 };

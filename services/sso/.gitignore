@@ -32,7 +32,6 @@ node_modules/
 
 .envrc*
 tmp
-.kubeconfig
 known_hosts
 
 packages/**/globalConfig.json
