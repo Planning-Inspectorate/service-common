@@ -1,5 +1,5 @@
 const ensureIsAuthenticated = require("./ensure-is-authenticated");
-const { mockReq, mockRes, mockNext } = require("../mocks");
+const { mockReq, mockRes, mockNext } = require("../test/mocks");
 
 describe("ensureIsAuthenticated", () => {
   let req;
