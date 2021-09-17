@@ -1,5 +1,6 @@
 const msal = require("@azure/msal-node");
 const sso = require("./sso");
+const ensureIsAuthenticated = require("../middleware/ensure-is-authenticated");
 
 jest.mock("@azure/msal-node");
 
@@ -25,7 +26,7 @@ describe("sso", () => {
 
   beforeEach(() => {
     msal.ConfidentialClientApplication.mockClear();
-    app = { get: jest.fn() };
+    app = { get: jest.fn(), use: jest.fn() };
   });
 
   it("should call the constructor of msal.ConfidentialClientApplication", () => {
@@ -36,8 +37,10 @@ describe("sso", () => {
   it("should call root and redirect of app.get", () => {
     sso(app, mockConfig, logger);
 
-    expect(app.get).toHaveBeenCalledTimes(2);
-    expect(app.get).toHaveBeenCalledWith("/", expect.any(Function));
+    expect(app.get).toHaveBeenCalledTimes(1);
+    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledWith("/", expect.any(Function));
     expect(app.get).toHaveBeenCalledWith("/redirect", expect.any(Function));
+    expect(app.use).toHaveBeenCalledWith("/", ensureIsAuthenticated);
   });
 });
