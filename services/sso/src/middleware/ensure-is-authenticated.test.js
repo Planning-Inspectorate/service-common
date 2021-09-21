@@ -17,18 +17,14 @@ describe("ensureIsAuthenticated", () => {
   });
 
   it("should return next if request contains authentication confirmation", () => {
-    req.isAuthenticated = jest.fn(() => {
-      return true;
-    });
+    req.isAuthenticated = true;
 
     ensureIsAuthenticated(req, res, next);
     expect(next).toHaveBeenCalled();
   });
 
   it("should return redirect if request contains authentication confirmation", () => {
-    req.isAuthenticated = jest.fn(() => {
-      return false;
-    });
+    req.isAuthenticated = false;
 
     ensureIsAuthenticated(req, res, next);
     expect(res.redirect).toHaveBeenCalledWith(

@@ -1,6 +1,5 @@
 const msal = require("@azure/msal-node");
 const sso = require("./sso");
-const ensureIsAuthenticated = require("../middleware/ensure-is-authenticated");
 
 jest.mock("@azure/msal-node");
 
@@ -38,9 +37,8 @@ describe("sso", () => {
     sso(app, mockConfig, logger);
 
     expect(app.get).toHaveBeenCalledTimes(1);
-    expect(app.use).toHaveBeenCalledTimes(2);
+    expect(app.use).toHaveBeenCalledTimes(1);
     expect(app.use).toHaveBeenCalledWith("/", expect.any(Function));
     expect(app.get).toHaveBeenCalledWith("/redirect", expect.any(Function));
-    expect(app.use).toHaveBeenCalledWith("/", ensureIsAuthenticated);
   });
 });
