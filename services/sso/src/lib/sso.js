@@ -1,5 +1,4 @@
 const msal = require("@azure/msal-node");
-const ensureIsAuthenticated = require("../middleware/ensure-is-authenticated");
 
 const getAzureConfig = (authConfig, logger) => ({
   auth: {
@@ -19,6 +18,24 @@ const getAzureConfig = (authConfig, logger) => ({
   },
 });
 
+/* istanbul ignore next */
+const loginViaMicrosoft = (req, res, cca, config, logger) => {
+  const authCodeUrlParameters = {
+    scopes: ["user.read"],
+    redirectUri: config.redirectUri,
+  };
+
+  cca
+    .getAuthCodeUrl(authCodeUrlParameters)
+    .then((response) => {
+      req.session.isAuthenticated = true;
+      res.redirect(response);
+    })
+    .catch((error) =>
+      logger.error({ error }, `Error getting authorisation url`)
+    );
+};
+
 module.exports = (app, config, logger) => {
   const cca = new msal.ConfidentialClientApplication(
     getAzureConfig(config.auth, logger)
@@ -27,20 +44,7 @@ module.exports = (app, config, logger) => {
   /* istanbul ignore next */
   app.use("/", (req, res, next) => {
     if (req.session.isAuthenticated !== true) {
-      const authCodeUrlParameters = {
-        scopes: ["user.read"],
-        redirectUri: config.redirectUri,
-      };
-
-      cca
-        .getAuthCodeUrl(authCodeUrlParameters)
-        .then((response) => {
-          req.session.isAuthenticated = true;
-          res.redirect(response);
-        })
-        .catch((error) =>
-          logger.error({ error }, `Error getting authorisation url`)
-        );
+      loginViaMicrosoft(req, res, cca, config, logger);
     }
     next();
   });
@@ -64,6 +68,4 @@ module.exports = (app, config, logger) => {
         res.status(500).send(error);
       });
   });
-
-  app.use("/", ensureIsAuthenticated);
 };
