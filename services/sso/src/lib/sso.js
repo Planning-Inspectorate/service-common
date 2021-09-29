@@ -19,21 +19,18 @@ const getAzureConfig = (authConfig, logger) => ({
 });
 
 /* istanbul ignore next */
+// eslint-disable-next-line consistent-return
 const loginViaMicrosoft = (req, res, cca, config, logger) => {
   const authCodeUrlParameters = {
     scopes: ["user.read"],
     redirectUri: config.redirectUri,
   };
 
-  cca
-    .getAuthCodeUrl(authCodeUrlParameters)
-    .then((response) => {
-      req.session.isAuthenticated = true;
-      res.redirect(response);
-    })
-    .catch((error) =>
-      logger.error({ error }, `Error getting authorisation url`)
-    );
+  try {
+    return cca.getAuthCodeUrl(authCodeUrlParameters);
+  } catch (error) {
+    logger.error({ error }, `Error getting authorisation url`);
+  }
 };
 
 module.exports = (app, config, logger) => {
@@ -42,11 +39,19 @@ module.exports = (app, config, logger) => {
   );
 
   /* istanbul ignore next */
-  app.use("/", (req, res, next) => {
+  // eslint-disable-next-line consistent-return
+  app.use("/", async (req, res, next) => {
     if (req.session.isAuthenticated !== true) {
-      loginViaMicrosoft(req, res, cca, config, logger);
+      const response = await loginViaMicrosoft(req, res, cca, config, logger);
+      if (response) {
+        req.session.isAuthenticated = true;
+        res.redirect(response);
+      } else {
+        return res.status(401).send({ error: "Microsoft Login Failed" });
+      }
+    } else {
+      next();
     }
-    next();
   });
 
   /* istanbul ignore next */
