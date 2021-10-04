@@ -8,7 +8,7 @@ const {
   MIME_TYPE_PNG,
 } = require("./mime-types");
 
-const { validateMimeBinaryType } = require("./index");
+const { validateMimeBinaryType } = require("./validateMime");
 
 function MockFile() {}
 

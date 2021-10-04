@@ -1,4 +1,4 @@
-const { validMimeType } = require("./index");
+const { validMimeType } = require("./validateMime");
 
 describe("validMimeType", () => {
   it("should be valid", () => {
