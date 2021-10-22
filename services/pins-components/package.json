@@ -1,5 +1,5 @@
 {
-  "name": "pins-components",
+  "name": "@planning-inspectorate/pins-components",
   "version": "1.0.0",
   "description": "Nunjucks components used by PINS",
   "main": "index.js",
