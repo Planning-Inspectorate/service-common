@@ -1,30 +1,42 @@
 /* istanbul ignore file */
-const NodeClam = require("clamscan");
+const axios = require("axios").default;
+const FormData = require("form-data");
+
 const fs = require("fs");
+const path = require("path");
 
-const { CLAM_AV_PORT, CLAM_AV_HOST } = process.env
+const { CLAM_AV_HOST } = process.env;
 
-module.exports = async (fileInformation, fileName = "The file") => {
-  if (typeof fileInformation?.tempFilePath !== "undefined") {
-    const clamscan = await new NodeClam().init({
-      debug_mode: true,
-      clamdscan: {
-        host: CLAM_AV_HOST || "clamav",
-        port: CLAM_AV_PORT || 3310,
-        bypass_test: true,
-      },
-    });
-  
-    const fileStream = fs.createReadStream(fileInformation.tempFilePath);
-  
-    // eslint-disable-next-line camelcase
-    const { is_infected } = await clamscan.scan_stream(fileStream);
-  
-    // eslint-disable-next-line camelcase
-    if (is_infected) {
-      throw new Error(`${fileName} contains a virus`);
+module.exports = async (fileInformation, { fileName, location, debug }) => {
+  const host = CLAM_AV_HOST || "https://dev-clamav.azurewebsites.net";
+
+  try {
+    if (typeof fileInformation?.tempFilePath !== "undefined") {
+      let filePath;
+
+      if (debug === true) {
+        filePath = path.resolve(__dirname, location);
+      } else {
+        filePath = location;
+      }
+
+      const fileBuffer = fs.readFileSync(filePath);
+      const form = new FormData();
+      form.append("name", fileBuffer, fileName);
+
+      const { data } = await axios({
+        headers: form.getHeaders(),
+        url: `${host}/scan`,
+        method: "POST",
+      });
+
+      if (data) {
+        throw new Error(`${fileName} contains a virus`);
+      }
     }
-  }
 
-  return true;
+    return true;
+  } catch (error) {
+    return false;
+  }
 };
