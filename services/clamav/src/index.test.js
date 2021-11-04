@@ -3,12 +3,12 @@ const uploadAV = require("./index");
 describe("clamav", () => {
   it("should scan uploaded document with negative result", async () => {
     const file = {
-      tempFilePath: "./events.csv",
+      tempFilePath: "./eicar.com.txt",
     };
 
     const succesfullyUploaded = await uploadAV(file, {
-      fileName: "testfile.docx",
-      location: "./events.csv",
+      fileName: "eicar.com.txt",
+      location: "./eicar.com.txt",
       debug: true,
     });
 

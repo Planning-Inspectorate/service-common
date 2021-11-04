@@ -22,15 +22,18 @@ module.exports = async (fileInformation, { fileName, location, debug }) => {
 
       const fileBuffer = fs.readFileSync(filePath);
       const form = new FormData();
-      form.append("name", fileBuffer, fileName);
+
+      form.append("name", fileName);
+      form.append("file", fileBuffer, fileName);
 
       const { data } = await axios({
         headers: form.getHeaders(),
         url: `${host}/scan`,
+        data: form,
         method: "POST",
       });
 
-      if (data) {
+      if (typeof data === "string" && data.includes("false")) {
         throw new Error(`${fileName} contains a virus`);
       }
     }
