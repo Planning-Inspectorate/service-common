@@ -26,10 +26,11 @@ The packages for committing (Commitizen and Husky) are part of the service-commo
 1. Create a new directory in the services folder
 2. Copy the contents of ~/default-common-files/ to the new directory
 3. Change the name of default-package.json to package.json
-4. In the new package.json, populate fields: name, description, repository: url, author
-5. Add keywords as necessary
-6. Make sure you use index.js as your entrypoint
-7. Add service src code
+4. In the new package.json, populate the field name as @planning-inspectorate/:name
+5. In the new package.json, populate fields: description, repository: url, author
+6. Add keywords as necessary
+7. Make sure you use index.js as your entrypoint
+8. Add service src code
 
 ### Adding to npm
 
