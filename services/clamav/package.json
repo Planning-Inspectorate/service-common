@@ -1,6 +1,6 @@
 {
-  "name": "pins-clamav",
-  "version": "1.0.0",
+  "name": "@planning-inspectorate/pins-clamav",
+  "version": "1.0.3",
   "description": "common service for clam antivirus",
   "main": "src/index.js",
   "scripts": {
