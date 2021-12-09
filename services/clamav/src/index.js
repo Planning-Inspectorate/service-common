@@ -15,7 +15,7 @@ module.exports = async (fileInformation, { fileName, location, debug }) => {
       let filePath;
 
       if (debug === true) {
-        filePath = path.resolve(__dirname, location);
+        filePath = path.resolve(location);
       } else {
         filePath = location;
       }
@@ -33,9 +33,7 @@ module.exports = async (fileInformation, { fileName, location, debug }) => {
         method: "POST",
       });
 
-      if (typeof data === "string" && data.includes("false")) {
-        throw new Error(`${fileName} contains a virus`);
-      }
+      if (typeof data === "string" && data.includes("false")) return false;
     }
 
     return true;
