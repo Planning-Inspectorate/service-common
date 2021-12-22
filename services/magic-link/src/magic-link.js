@@ -99,8 +99,9 @@ async function verifyMagicLink(magicLink) {
         userInformation: magicLinkData.auth.userInformation,
         exp: dateUtils.addMillisToCurrentDate(magicLinkData.auth.tokenValidity).getTime(),
       }, 
-      config.jwtSigningKey);
-    
+      config.jwtSigningKey)
+    );
+
       loginDetails = {
         success: true,
         cookieName: magicLinkData.auth.cookieName,

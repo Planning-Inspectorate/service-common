@@ -4,10 +4,10 @@
  * @param timeInMillis milliseconds to be added to the current date
  * @returns {Date}
  */
- function addMillisToCurrentDate(timeInMillis) {
-    return new Date(Date.now() + timeInMillis);
-  }
-  
-  module.exports = {
-    addMillisToCurrentDate,
-  };
+function addMillisToCurrentDate(timeInMillis) {
+  return new Date(Date.now() + timeInMillis);
+}
+
+module.exports = {
+  addMillisToCurrentDate,
+};

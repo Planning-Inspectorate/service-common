@@ -1,4 +1,4 @@
-const yup = require('yup');
+const yup = require("yup");
 
 const magicLinkObject = yup.object().shape({
   redirectURL: yup.string().required(),
@@ -23,7 +23,10 @@ const magicLinkDataSchema = yup.object().shape({
  * @returns promise that returns the given magicLinkData if data is valid, throws error otherwise.
  */
 async function validate(magicLinkData) {
-  return magicLinkDataSchema.validate(magicLinkData, { abortEarly: false, allowUnknown: false });
+  return magicLinkDataSchema.validate(magicLinkData, {
+    abortEarly: false,
+    allowUnknown: false,
+  });
 }
 
 module.exports = { validate };
