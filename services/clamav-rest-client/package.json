@@ -1,6 +1,6 @@
 {
-  "name": "@planning-inspectorate/pins-clamav",
-  "version": "1.0.9",
+  "name": "@planning-inspectorate/pins-clamav-rest-client",
+  "version": "1.0.0",
   "description": "Client for Clam Antivirus Rest Server",
   "main": "src/index.js",
   "scripts": {
