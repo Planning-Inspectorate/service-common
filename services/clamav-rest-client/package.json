@@ -1,7 +1,7 @@
 {
   "name": "@planning-inspectorate/pins-clamav",
   "version": "1.0.9",
-  "description": "common service for clam antivirus",
+  "description": "Client for Clam Antivirus Rest Server",
   "main": "src/index.js",
   "scripts": {
     "lint": "eslint ./",
