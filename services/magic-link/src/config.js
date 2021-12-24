@@ -8,6 +8,6 @@ module.exports = {
     ],
   },
   jwtSigningKey: "QeThWmZq4t7w!z$C&F)J@NcRfUjXn2r5",
-  magicLinkValidityTimeMillis: 86400000,
+  magicLinkValidityTimeMillis: 900000,
   cookieValidityTimeMillis: 14400000,
 };

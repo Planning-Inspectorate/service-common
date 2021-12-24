@@ -46,7 +46,6 @@ const getMagicLink = async (payload) => {
 
     return jwt.sign(tokenData, config.jwtSigningKey);
   } catch (err) {
-    console.log(err);
     throw new Error("Invalid magic link request format");
   }
 };

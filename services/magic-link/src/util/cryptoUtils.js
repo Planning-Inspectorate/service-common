@@ -5,7 +5,6 @@ const algorithm = "aes-256-ctr";
 const secretKey = config.jwtSigningKey;
 
 function generateBytes() {
-  console.log("CALLED");
   return crypto.randomBytes(16);
 }
 
@@ -32,31 +31,31 @@ function encryptValue(text) {
  * @param hash
  * @returns {string}
  */
-function decryptValue(hash) {
-  try {
-    console.log("HASH");
-    console.log(hash);
-
-    const decipher = crypto.createDecipheriv(
-      algorithm,
-      secretKey,
-      Buffer.from(hash.iv, "hex")
-    );
-
-    const decrypted = Buffer.concat([
-      decipher.update(Buffer.from(hash.content, "hex")),
-      decipher.final(),
-    ]);
-
-    return decrypted.toString();
-  } catch (err) {
-    console.log(err);
-    return String.empty();
-  }
-}
+// function decryptValue(hash) {
+//   try {
+//     console.log("HASH");
+//     console.log(hash);
+//
+//     const decipher = crypto.createDecipheriv(
+//       algorithm,
+//       secretKey,
+//       Buffer.from(hash.iv, "hex")
+//     );
+//
+//     const decrypted = Buffer.concat([
+//       decipher.update(Buffer.from(hash.content, "hex")),
+//       decipher.final(),
+//     ]);
+//
+//     return decrypted.toString();
+//   } catch (err) {
+//     console.log(err);
+//     return String.empty();
+//   }
+// }
 
 module.exports = {
-  decryptValue,
+  // decryptValue,
   encryptValue,
   generateBytes,
 };
