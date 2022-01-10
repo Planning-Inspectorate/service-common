@@ -7,7 +7,7 @@ module.exports = {
       "config.server.sessionSecret",
     ],
   },
-  jwtSigningKey: "",
+  jwtSigningKey: "QeThWmZq4t7w!z$C&F)J@NcRfUjXn2r5",
   magicLinkValidityTimeMillis: 900000,
   cookieValidityTimeMillis: 14400000,
 };

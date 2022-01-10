@@ -4,10 +4,10 @@ const data = JSON.stringify({
   attribute: "value",
 });
 
-// const encryptedData = {
-//   content: "fb07c8062a2ec2175d58b9946f793a6f3887290a80",
-//   iv: "ffa5698984618699479f1a592a039e46",
-// };
+const encryptedData = {
+  iv: "b7af0b5ae51352a96412c9198cd285a7",
+  content: "3031c4f801ac4cc0ecb6024ba45f9edcd7e7b53848",
+};
 
 describe("util.crypto", () => {
   describe("encrypt text", () => {
@@ -19,11 +19,11 @@ describe("util.crypto", () => {
     });
   });
 
-  // describe("decrypt text", () => {
-  //   test("should decrypt with success", () => {
-  //     const expectedEncryptedData = crypto.decrypt(encryptedData);
-  //
-  //     expect(expectedEncryptedData).toEqual(data);
-  //   });
-  // });
+  describe("decrypt text", () => {
+    test("should decrypt with success", () => {
+      const expectedEncryptedData = crypto.decryptValue(encryptedData);
+
+      expect(expectedEncryptedData).toEqual(data);
+    });
+  });
 });

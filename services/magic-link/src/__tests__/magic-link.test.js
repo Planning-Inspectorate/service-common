@@ -24,9 +24,19 @@ describe("magiclink - integration tests", () => {
     let magicLinkResponse;
 
     describe("getMagicLink", () => {
-      it("should create a JWT cookie", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
+      it("errors when given invalid Json data - Invalid magic link request format", async () => {
+        try {
+          magicLinkResponse = await magicLink.getMagicLink(
+            magicLinkJsonDataInvalid
+          );
+        } catch (err) {
+          expect(err.message).toEqual("Invalid magic link request format");
+        }
+      });
+    });
 
+    describe("getMagicLink", () => {
+      it("should create a JWT cookie", async () => {
         magicLinkResponse = await magicLink.getMagicLink(magicLinkJsonData);
 
         expect(magicLinkResponse).toEqual(
@@ -35,35 +45,21 @@ describe("magiclink - integration tests", () => {
       });
     });
 
-    describe("getMagicLink", () => {
-      it("errors when given invalid Json data - Invalid magic link request format", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
+    describe("verifyMagicLink", () => {
+      it("should respond with object indicating the status of the login attempt as well as a cookie and a redirect URL", async () => {
+        const loginResponse = magicLink.verifyMagicLink(magicLinkResponse);
 
-        try {
-          magicLinkResponse = await magicLink.getMagicLink(
-            magicLinkJsonDataInvalid
-          );
-        } catch (err) {
-          expect(err.message).toEqual(
-            "Invalid magic link request format"
-          );
-        }
+        console.log(loginResponse);
+
+        expect(loginResponse.success).toBe(true);
+        expect(loginResponse.cookieName).toBe("authCookie");
+        expect(loginResponse.cookieToken).toBeTruthy(); // Might be a better way to test this
+        expect(loginResponse.cookieOptions.expires).toBe(1629300347 + 400000);
+        expect(loginResponse.cookieOptions.httpOnly).toBe(true);
+        expect(loginResponse.redirectUrl).toBe(
+          "http://localhost:9001/appeal-questionnaire/89aa8504-773c-42be-bb68-029716ad9756/task-list"
+        );
       });
     });
-
-    // describe("verifyMagicLink", () => {
-    //   it("should respond with object indicating the status of the login attempt as well as a cookie and a redirect URL", async () => {
-    //     const loginResponse = magicLink.verifyMagicLink(magicLinkResponse);
-    //
-    //     expect(loginResponse.success).toBe(true);
-    //     expect(loginResponse.cookieName).toBe("authCookie");
-    //     expect(loginResponse.cookieToken).toBeTruthy(); // Might be a better way to test this
-    //     expect(loginResponse.cookieOptions.expires).toBe(1629300347 + 400000);
-    //     expect(loginResponse.cookieOptions.httpOnly).toBe(true);
-    //     expect(loginResponse.redirectUrl).toBe(
-    //       "http://localhost:9001/appeal-questionnaire/89aa8504-773c-42be-bb68-029716ad9756/task-list"
-    //     );
-    //   });
-    // });
   });
 });
