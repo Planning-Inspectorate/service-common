@@ -43,5 +43,14 @@ describe("magiclink - integration tests", () => {
         }
       });
     });
+
+    describe("verifyMagicLink", () => {
+      it("errors when given an invalid magic link - not valid", async () => {
+        const loginResponse = magicLink.verifyMagicLink("");
+
+        expect(loginResponse.success).toBe(false);
+        expect(loginResponse.redirectUrl).toBeUndefined();
+      });
+    });
   });
 });

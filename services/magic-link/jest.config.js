@@ -9,7 +9,7 @@ module.exports = {
     "<rootDir>/src/error/ExpiredTokenError.js",
     "<rootDir>/src/error/InvalidTokenError.js",
   ],
-  coverageDirectory: "../coverage",
+  coverageDirectory: "./coverage",
   coverageThreshold: {
     global: {
       branches: 85,
