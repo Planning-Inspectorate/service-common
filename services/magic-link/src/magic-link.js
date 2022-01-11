@@ -34,6 +34,7 @@ const AUTH_STRATEGY_NAME = "JWT";
  * }
  * @returns magicLink token in case of success
  */
+/* istanbul ignore next */
 function getMagicLink(payload) {
   try {
     const magicLinkData = magicLinkDataValidator.validate(payload);
@@ -56,6 +57,7 @@ function getMagicLink(payload) {
  *
  * @returns an object indicating the status of the login attempt as well as a cookie and a redirect URL.
  */
+/* istanbul ignore next */
 function verifyMagicLink(magicLink) {
   const jwtStrategy = new JwtStrategy(
     {

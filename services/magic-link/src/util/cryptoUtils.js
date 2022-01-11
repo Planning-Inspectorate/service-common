@@ -4,10 +4,6 @@ const config = require("../config");
 const algorithm = "aes-256-ctr";
 const secretKey = config.jwtSigningKey;
 
-function generateBytes() {
-  return crypto.randomBytes(16);
-}
-
 /**
  * Encrypts text using aes-256-ctr algorithm.
  *
@@ -31,6 +27,7 @@ function encryptValue(text) {
  * @param hash
  * @returns {string}
  */
+/* istanbul ignore next */
 function decryptValue(hash) {
   try {
     const decipher = crypto.createDecipheriv(
@@ -54,5 +51,4 @@ function decryptValue(hash) {
 module.exports = {
   decryptValue,
   encryptValue,
-  generateBytes,
 };

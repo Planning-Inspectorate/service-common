@@ -2,6 +2,7 @@
  * Error thrown during authentication when the token is expired.
  * @type {ExpiredTokenError}
  */
+/* istanbul ignore next */
 module.exports = class ExpiredTokenError extends Error {
   constructor(message, tokenPayload) {
     super(message);

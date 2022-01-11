@@ -26,7 +26,7 @@ describe("magiclink - integration tests", () => {
 
     describe("getMagicLink", () => {
       it("should create a JWT cookie", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
+        // cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
 
         magicLinkResponse = await magicLink.getMagicLink(magicLinkJsonData);
 
@@ -38,7 +38,7 @@ describe("magiclink - integration tests", () => {
 
     describe("getMagicLink", () => {
       it("errors when given invalid Json data - Invalid magic link request format", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
+        // cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
 
         try {
           magicLinkResponse = await magicLink.getMagicLink(

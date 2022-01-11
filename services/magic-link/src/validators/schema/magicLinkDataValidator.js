@@ -22,6 +22,7 @@ const magicLinkDataSchema = yup.object().shape({
  * @param magicLinkData
  * @returns promise that returns the given magicLinkData if data is valid, throws error otherwise.
  */
+/* istanbul ignore next */
 async function validate(magicLinkData) {
   return magicLinkDataSchema.validate(magicLinkData, {
     abortEarly: false,
