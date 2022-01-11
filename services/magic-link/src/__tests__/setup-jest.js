@@ -1,0 +1,3 @@
+process.env.JWT_SIGNING_KEY = "mockSigningKey";
+process.env.MAGIC_LINK_VALIDITY_TIME_MILLIS = "900000";
+process.env.COOKIE_VALIDITY_TIME_MILLIS = "14400000";

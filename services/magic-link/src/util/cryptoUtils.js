@@ -27,25 +27,19 @@ function encryptValue(text) {
  * @param hash
  * @returns {string}
  */
-/* istanbul ignore next */
 function decryptValue(hash) {
-  try {
-    const decipher = crypto.createDecipheriv(
-      algorithm,
-      secretKey,
-      Buffer.from(hash.iv, "hex")
-    );
+  const decipher = crypto.createDecipheriv(
+    algorithm,
+    secretKey,
+    Buffer.from(hash.iv, "hex")
+  );
 
-    const decrypted = Buffer.concat([
-      decipher.update(Buffer.from(hash.content, "hex")),
-      decipher.final(),
-    ]);
+  const decrypted = Buffer.concat([
+    decipher.update(Buffer.from(hash.content, "hex")),
+    decipher.final(),
+  ]);
 
-    return decrypted.toString();
-  } catch (err) {
-    console.log(err);
-    return String.empty();
-  }
+  return decrypted.toString();
 }
 
 module.exports = {

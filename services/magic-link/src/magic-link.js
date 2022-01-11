@@ -37,7 +37,8 @@ const AUTH_STRATEGY_NAME = "JWT";
 /* istanbul ignore next */
 function getMagicLink(payload) {
   try {
-    const magicLinkData = magicLinkDataValidator.validate(payload);
+    // eslint-disable-next-line no-unused-vars
+    magicLinkDataValidator.validate(payload).then();
 
     const tokenData = {
       data: cryptoUtils.encryptValue(JSON.stringify(payload)),
@@ -79,7 +80,6 @@ function verifyMagicLink(magicLink) {
 
   try {
     passport.authenticate(AUTH_STRATEGY_NAME, {}, (err, tokenPayload) => {
-
       if (!tokenPayload) {
         throw new InvalidTokenError("Invalid or missing token.");
       }
