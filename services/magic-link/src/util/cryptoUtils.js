@@ -15,7 +15,7 @@ function generateBytes() {
  * @returns {{iv: string, content: string}}
  */
 function encryptValue(text) {
-  const iv = generateBytes();
+  const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
   const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
 
@@ -31,31 +31,28 @@ function encryptValue(text) {
  * @param hash
  * @returns {string}
  */
-// function decryptValue(hash) {
-//   try {
-//     console.log("HASH");
-//     console.log(hash);
-//
-//     const decipher = crypto.createDecipheriv(
-//       algorithm,
-//       secretKey,
-//       Buffer.from(hash.iv, "hex")
-//     );
-//
-//     const decrypted = Buffer.concat([
-//       decipher.update(Buffer.from(hash.content, "hex")),
-//       decipher.final(),
-//     ]);
-//
-//     return decrypted.toString();
-//   } catch (err) {
-//     console.log(err);
-//     return String.empty();
-//   }
-// }
+function decryptValue(hash) {
+  try {
+    const decipher = crypto.createDecipheriv(
+      algorithm,
+      secretKey,
+      Buffer.from(hash.iv, "hex")
+    );
+
+    const decrypted = Buffer.concat([
+      decipher.update(Buffer.from(hash.content, "hex")),
+      decipher.final(),
+    ]);
+
+    return decrypted.toString();
+  } catch (err) {
+    console.log(err);
+    return String.empty();
+  }
+}
 
 module.exports = {
-  // decryptValue,
+  decryptValue,
   encryptValue,
   generateBytes,
 };
