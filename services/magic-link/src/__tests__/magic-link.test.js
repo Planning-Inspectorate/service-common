@@ -8,12 +8,11 @@ const magicLinkJsonData = require("./resources/magicLinkData.json");
 const magicLinkJsonDataInvalid = require("./resources/magicLinkDataInvalid.json");
 
 jest.mock("../util/cryptoUtils");
-const cryptoUtils = require("../util/cryptoUtils");
 
 describe("magiclink - integration tests", () => {
   beforeAll(() => {
     jest.useFakeTimers("modern");
-    jest.setSystemTime(1629300347);
+    jest.setSystemTime();
   });
 
   afterAll(() => {
@@ -25,45 +24,24 @@ describe("magiclink - integration tests", () => {
 
     describe("getMagicLink", () => {
       it("should create a JWT cookie", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
-
         magicLinkResponse = await magicLink.getMagicLink(magicLinkJsonData);
 
         expect(magicLinkResponse).toEqual(
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzAyMDAzNDcsImlhdCI6MTYyOTMwMH0.DGWGjs3XfOj2jZJgffCC05PDaWG7XuE9BwFM-NyxUn4"
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjkwMDAwMCwiaWF0IjowfQ.hoaKRIfrFsfSxVQbk53FBWQR7pF902sMt98qGWIDLJ4"
         );
       });
     });
 
     describe("getMagicLink", () => {
       it("errors when given invalid Json data - Invalid magic link request format", async () => {
-        cryptoUtils.generateBytes.mockReturnValue(Buffer.alloc(16));
-
         try {
           magicLinkResponse = await magicLink.getMagicLink(
             magicLinkJsonDataInvalid
           );
         } catch (err) {
-          expect(err.message).toEqual(
-            "Invalid magic link request format"
-          );
+          expect(err.message).toEqual("Invalid magic link request format");
         }
       });
     });
-
-    // describe("verifyMagicLink", () => {
-    //   it("should respond with object indicating the status of the login attempt as well as a cookie and a redirect URL", async () => {
-    //     const loginResponse = magicLink.verifyMagicLink(magicLinkResponse);
-    //
-    //     expect(loginResponse.success).toBe(true);
-    //     expect(loginResponse.cookieName).toBe("authCookie");
-    //     expect(loginResponse.cookieToken).toBeTruthy(); // Might be a better way to test this
-    //     expect(loginResponse.cookieOptions.expires).toBe(1629300347 + 400000);
-    //     expect(loginResponse.cookieOptions.httpOnly).toBe(true);
-    //     expect(loginResponse.redirectUrl).toBe(
-    //       "http://localhost:9001/appeal-questionnaire/89aa8504-773c-42be-bb68-029716ad9756/task-list"
-    //     );
-    //   });
-    // });
   });
 });
