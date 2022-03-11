@@ -232,12 +232,12 @@
         {% endif %}
       </a>
     </div>
-    <div class="govuk-header__content">
-    {# {% if params.serviceName %}
-    <a href="{{ params.serviceUrl }}" class="govuk-header__link govuk-header__link--service-name">
+     <div class="govuk-header__content">
+    {% if params.serviceName %}
+    <span class="govuk-header__link--service-name">
       {{ params.serviceName }}
-    </a>
-    {% endif %} #}
+    </span>
+    {% endif %}
     <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="{{ params.menuButtonLabel | default('Show or hide navigation menu') }}">Menu</button>
     {# <nav>
       <ul id="navigation" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}" aria-label="{{ params.navigationLabel | default('Navigation menu') }}">
