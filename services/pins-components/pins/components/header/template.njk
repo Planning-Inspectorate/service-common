@@ -238,7 +238,18 @@
       {{ params.serviceName }}
     </span>
     {% endif %} #}
+
+    {#
+      - Commented out <button> from template due to a reported accessibility issue:
+      - Task Title: 'ARIA-Controls Attribute Does Not Point to an ID in the Same Document'
+      - Task URL: https://pins-ds.atlassian.net/jira/software/c/projects/ASB/boards/166?modal=detail&selectedIssue=ASB-348
+
+      - Investigation into the history of previous work shows that a navigation section has been commented out from the code.
+      - The button responsible for controlling the navigation remained.
+
       <button type="button" class="govuk-header__menu-button govuk-js-header-toggle" aria-controls="navigation" aria-label="{{ params.menuButtonLabel | default('Show or hide navigation menu') }}">Menu</button>
+    #}
+
       {# <nav>
       <ul id="navigation" class="govuk-header__navigation {{ params.navigationClasses if params.navigationClasses }}" aria-label="{{ params.navigationLabel | default('Navigation menu') }}">
         <li class="govuk-header__navigation-item">
