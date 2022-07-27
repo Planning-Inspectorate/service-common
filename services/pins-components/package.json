@@ -1,6 +1,6 @@
 {
   "name": "@planning-inspectorate/pins-components",
-  "version": "2.2.1",
+  "version": "2.2.2",
   "description": "Nunjucks components used by PINS",
   "main": "pins/index.js",
   "scripts": {
