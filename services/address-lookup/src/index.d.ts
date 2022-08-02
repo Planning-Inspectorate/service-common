@@ -23,10 +23,10 @@ export interface address {
 	town: string,
 }
 
-export interface findAddressListByPostcode {
-	(postcode: string) : {addressList: address[]} | {errors: {apiKey?: {msg: string}, postcode?: {msg: string}}}
-}
+export const findAddressListByPostcode: (postcode: string) => {addressList: address[]} | {errors: {apiKey?: {msg: string}, postcode?: {msg: string}}}
 
-declare const addressLookup: {findAddressListByPostcode};
+declare const addressLookup: {
+	findAddressListByPostcode
+}
 
 export default addressLookup;
