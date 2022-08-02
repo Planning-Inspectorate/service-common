@@ -23,7 +23,7 @@ export interface address {
 	town: string,
 }
 
-interface findAddressListByPostcode {
+export interface findAddressListByPostcode {
 	(postcode: string) : {addressList: address[]} | {errors: {apiKey?: {msg: string}, postcode?: {msg: string}}}
 }
 
