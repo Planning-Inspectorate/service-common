@@ -14,7 +14,7 @@ const findAddressListByPostcode = async (postcode) => {
     pino().error("OSApiKey is not defined");
     return {
       errors: { apiKey: { msg: "An error occurred, please try again later" } },
-      addressList: []
+      addressList: [],
     };
   }
   /** @type {OSApiAddress[]} */
