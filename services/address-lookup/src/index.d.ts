@@ -23,7 +23,12 @@ export interface address {
 	town: string,
 }
 
-export const findAddressListByPostcode: (postcode: string) => {addressList: address[]} | {errors: {apiKey?: {msg: string}, postcode?: {msg: string}}}
+export type ValidationErrors = {
+	apiKey?: {msg: string}
+	postcode?: {msg: string}
+};
+
+export const findAddressListByPostcode: (postcode: string) => Promise<{addressList: address[], errors?: ValidationErrors }>
 
 declare const addressLookup: {
 	findAddressListByPostcode
