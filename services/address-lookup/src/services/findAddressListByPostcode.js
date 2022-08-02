@@ -6,7 +6,7 @@ const formatDisplayAddress = require("../utils/formatAddress");
 /** @typedef {import('../index.d.ts').OSApiAddress} OSApiAddress */
 /** @typedef {import('../index.d.ts').findAddressListByPostcode} findAddressListByPostcode */
 
-/** @type{findAddressListByPostcode} */
+/** @type {findAddressListByPostcode} */
 const findAddressListByPostcode = async (postcode) => {
   const apiKey = process.env.OS_API_KEY;
 
@@ -25,7 +25,10 @@ const findAddressListByPostcode = async (postcode) => {
     .catch(() => []);
 
   if (!Array.isArray(rawAddresses) || rawAddresses.length === 0) {
-    return { errors: { postcode: { msg: "Enter a valid postcode" } } };
+    return {
+      errors: { postcode: { msg: "Enter a valid postcode" } },
+      addressList: [],
+    };
   }
 
   const addressList = rawAddresses.map((r) => {
