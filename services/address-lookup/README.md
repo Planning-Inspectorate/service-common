@@ -57,8 +57,8 @@ If the function does not return an addressList then an error has occurred. In th
 This is its structure:
 
     {
-        apiKey?: {msg: string}}
-        postcode?: {msg: string}}
+        apiKey?: {msg: string}
+        postcode?: {msg: string}
     }
 
  #### apiKey
@@ -70,7 +70,7 @@ The content of the message will be:
 
 Cannot be more specific because this is meant to be shown to users. However an error log will explaing what's happening.
 
-When this error is returned, ``addressList`` is undefined.
+When the api key error message is returned, ``addressList`` is also returned as an empty array
 #### postcode
 
 The `postcode` property will be defined when the API cannot find any address or for any not-200 response of the OS API.
