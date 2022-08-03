@@ -1,6 +1,6 @@
 {
   "name": "@planning-inspectorate/address-lookup",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Search Address Service by postcode based on OS places",
   "main": "src/index.js",
   "types": "src/index.d.ts",
