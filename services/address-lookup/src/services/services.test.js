@@ -105,7 +105,7 @@ describe("find address by postcode", () => {
   });
 
   it("should return an error if postcode is not valid", async () => {
-    process.env.OS_API_KEY = "key";
+    process.env.OS_PLACES_API_KEY = "key";
     axios.get.mockResolvedValueOnce({});
     const serviceResponse = await findAddressListByPostcode("");
     const expectedResult = {
@@ -116,7 +116,7 @@ describe("find address by postcode", () => {
   });
 
   it("should return the address if the postcode exists", async () => {
-    process.env.OS_API_KEY = "key";
+    process.env.OS_PLACES_API_KEY = "key";
     axios.get.mockResolvedValueOnce(mockResponseAddresses);
     const serviceResponse = await findAddressListByPostcode("EC2M 7PD");
 

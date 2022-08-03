@@ -1,5 +1,5 @@
 const axios = require("axios");
-const pino = require("pino");
+const logger = require("../utils/logger");
 const capitalizeString = require("../utils/capitalizeString");
 const formatDisplayAddress = require("../utils/formatAddress");
 
@@ -7,11 +7,15 @@ const formatDisplayAddress = require("../utils/formatAddress");
 /** @typedef {import('../index.d.ts').findAddressListByPostcode} findAddressListByPostcode */
 
 /** @type {findAddressListByPostcode} */
-const findAddressListByPostcode = async (postcode) => {
-  const apiKey = process.env.OS_API_KEY;
+const findAddressListByPostcode = async (
+  postcode,
+  options = { maxResults: 100, minMatch: 0.1 }
+) => {
+  const apiKey = process.env.OS_PLACES_API_KEY;
+  const { maxResults, minMatch } = options;
 
   if (!apiKey) {
-    pino().error("OSApiKey is not defined");
+    logger.error("OSApiKey is not defined");
     return {
       errors: { apiKey: { msg: "An error occurred, please try again later" } },
       addressList: [],
@@ -20,7 +24,7 @@ const findAddressListByPostcode = async (postcode) => {
   /** @type {OSApiAddress[]} */
   const rawAddresses = await axios
     .get(
-      `https://api.os.uk/search/places/v1/find?minmatch=0.9&maxresults=50&query=${postcode}&key=${apiKey}`
+      `https://api.os.uk/search/places/v1/find?minmatch=${minMatch}&maxresults=${maxResults}&query=${postcode}&key=${apiKey}`
     )
     .then((response) => response?.data?.results || [])
     .catch(() => []);
