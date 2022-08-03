@@ -1,0 +1,42 @@
+{
+  "name": "@planning-inspectorate/address-lookup",
+  "version": "1.0.5",
+  "description": "Search Address Service by postcode based on OS places",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "lint": "eslint ./",
+    "lint:fix": "eslint ./ --fix",
+    "format": "prettier --write './**/*.js'",
+    "test": "jest --coverage --maxWorkers=4",
+    "dev": "node ./src/dev.js"
+  },
+  "dependencies": {
+    "pino": "^8.3.1",
+    "axios": "^0.27.2",
+    "pino-pretty": "^8.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^7.11.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-config-prettier": "^6.14.0",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "lint-staged": "^10.5.0",
+    "jest": "^26.6.1",
+    "patch-package": "^6.2.2",
+    "prettier": "^2.1.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Planning-Inspectorate/service-common"
+  },
+  "keywords": ["pins", "address", "OS"],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Planning-Inspectorate/service-common/issues"
+  },
+  "homepage": "https://github.com/Planning-Inspectorate/service-common#readme"
+}
