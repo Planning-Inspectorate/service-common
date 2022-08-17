@@ -281,8 +281,8 @@
 
   {% if params.serviceName %}
     <div class="govuk-header__container {{ params.containerClasses | default('govuk-width-container') }}">
-      <span class="govuk-header__link--service-name">
-        {{ params.serviceName }}
+      <span class="govuk-!-display-inline-block govuk-body-l govuk-!-margin-bottom-2" style="color: inherit;">
+        <strong>{{ params.serviceName }}</strong>
       </span>
     </div>
   {% endif %}
