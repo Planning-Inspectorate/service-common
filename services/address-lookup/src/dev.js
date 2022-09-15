@@ -6,7 +6,6 @@ const findAddressListByPostcode = require("./services/findAddressListByPostcode"
   process.env.OS_PLACES_API_KEY = process.argv[2];
   const results = await findAddressListByPostcode("EC2M 4PT", {
     maxResults: 2,
-    minMatch: 0.9,
   });
   logger.info(results);
 })();

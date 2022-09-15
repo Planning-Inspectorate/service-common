@@ -30,7 +30,7 @@ export type ValidationErrors = {
 
 
 
-export const findAddressListByPostcode: (postcode: string, options?: {minMatch: number, maxResults: number}) => Promise<{addressList: address[], errors?: ValidationErrors }>
+export const findAddressListByPostcode: (postcode: string, options?: {maxResults: number}) => Promise<{addressList: address[], errors?: ValidationErrors }>
 
 declare const addressLookup: {
 	findAddressListByPostcode
