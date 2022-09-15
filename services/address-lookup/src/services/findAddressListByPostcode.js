@@ -9,10 +9,10 @@ const formatDisplayAddress = require("../utils/formatAddress");
 /** @type {findAddressListByPostcode} */
 const findAddressListByPostcode = async (
   postcode,
-  options = { maxResults: 100, minMatch: 0.1 }
+  options = { maxResults: 100 }
 ) => {
   const apiKey = process.env.OS_PLACES_API_KEY;
-  const { maxResults, minMatch } = options;
+  const { maxResults } = options;
 
   if (!apiKey) {
     logger.error("OSApiKey is not defined");
@@ -24,7 +24,7 @@ const findAddressListByPostcode = async (
   /** @type {OSApiAddress[]} */
   const rawAddresses = await axios
     .get(
-      `https://api.os.uk/search/places/v1/find?minmatch=${minMatch}&maxresults=${maxResults}&query=${postcode}&key=${apiKey}`
+      `https://api.os.uk/search/places/v1/postcode?maxresults=${maxResults}&postcode=${postcode}&key=${apiKey}`
     )
     .then((response) => response?.data?.results || [])
     .catch(() => []);
