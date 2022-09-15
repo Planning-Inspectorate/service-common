@@ -18,7 +18,7 @@ You can then use the service importing
 ```
 import {findAddressListByPostcode} from "@planning-inspectorate/address-lookup";
     
-const {errors, addressList} = await findAddressListByPostcode('EC2M7PD', {maxResults: 10, minMatch: 0.5});
+const {errors, addressList} = await findAddressListByPostcode('EC2M7PD', {maxResults: 10});
 ```
 
 ## Params
@@ -31,7 +31,6 @@ This is the structure:
  postcode: string, 
  options: {
     maxResults: integer, 
-    minMatch: float
  }
 }
 ```
@@ -40,7 +39,7 @@ This is the structure:
 
 It does not get validated inside the function: in case it's not valid the API will just return an empty list of addresses.
 
-A previous validation of it could be useful to prevent useless requests. See the `minmatch` section for information about the accepted formats of the postcode.
+A previous validation of it could be useful to prevent useless requests.
 
 
 - ⚠️ The OS Api does not require specifically postcodes. The string could be a street or a geographical indication as well. However that's not the purpose of this function
@@ -53,28 +52,6 @@ Should be an `integer`.
 Set the maximum number of results (could possibly be less if the API can't find enough) returned by the function.
 
 Default is 100.
-
-#### minMatch
-Should be a decimal number from `0.1` to `0.9`.
-
-Set the minimum match score a result has to have to be returned.
-
-According to the API docs this is the meaning of the possible values
-
-
-| Match score   | Match description |
-|---------------|-------------------|
-| 1.0           | Exact             |
-| 0.8 - 0.9     | Good              |
-| 0.7           | Partial           |
-| 0.6 and under | No match          |
-
-Default value is `0.1`. Suggested value is `0.9`.
-
-- ⚠️ A `minMatch` set to `1.0` will potentially don't find any match if the postcode contains spaces or not 100% precise formats. 
-- ⚠️ A `minMatch` set to `0.6` and under will potentially match with completely unrelated addresses.
-
-
 
 ## Return value:
 
