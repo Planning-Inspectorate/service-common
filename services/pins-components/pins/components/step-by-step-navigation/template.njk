@@ -37,7 +37,10 @@
                 </h3>
             </div>
             <div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1">
-                <p class="app-step-nav__paragraph">{{ step.content.text }}</p>
+                {% for para in [step.content.text].flat() %}
+                    <p class="app-step-nav__paragraph">{{ para }}</p>
+                {% endfor %}
+
                 {% for link in step.subList %}
                     <p class="app-step-nav__paragraph"><a href="{{ link.href }}" class="app-step-nav__link">{{ link.text }}</a></p>
                 {% endfor %}  
