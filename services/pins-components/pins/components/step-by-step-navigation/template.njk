@@ -3,7 +3,7 @@
 {% set headingLink = params.headingLink if params.headingLink else "#" %}
 {% set partOfProcess = params.partOfProcess if params.partOfProcess else true %}
 
-<div class="pins-step-by-step-section-sidebar">          
+<div class="pins-step-by-step-section-sidebar">
 {% if params.useIPDefaultStepByStep %}
     <div class="app-step-nav-related app-step-nav-related--singular">
         <h2 class="app-step-nav-related__heading">
@@ -14,12 +14,12 @@
     </div>
     <div id="step-by-step-navigation-default-ip-guide" class="pins-step-nav app-step-nav">
       <ol class="app-step-nav__steps">
-       
+
           {% for step in params.steps %}
-           <li aria-current="step" data-show id="having-your-say-at-pre-application-stage" class="app-step-nav__step
-            {% if params.currentDefaultStep == loop.index %} 
+           <li aria-current="step" data-show id="having-your-say-at-pre-application-stage-{{ loop.index }}" class="app-step-nav__step
+            {% if params.currentDefaultStep == loop.index %}
             app-step-nav__step--active
-            {% endif %} 
+            {% endif %}
             ">
             <div class="app-step-nav__header " data-position="{{ loop.index }}">
                 <h3 class="app-step-nav__title">
@@ -36,18 +36,18 @@
                     </span>
                 </h3>
             </div>
-            <div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1">
+            <div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1-{{ loop.index }}">
                 {% for para in [step.content.text].flat() %}
                     <p class="app-step-nav__paragraph">{{ para }}</p>
                 {% endfor %}
 
                 {% for link in step.subList %}
                     <p class="app-step-nav__paragraph"><a href="{{ link.href }}" class="app-step-nav__link">{{ link.text }}</a></p>
-                {% endfor %}  
+                {% endfor %}
             </div>
           </li>
           {% endfor %}
         </ol>
-    </div> 
+    </div>
   {% endif %}
 </div>
