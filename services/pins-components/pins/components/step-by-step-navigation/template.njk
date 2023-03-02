@@ -8,7 +8,7 @@
 	{% if params.useIPDefaultStepByStep %}
 		{% if templateID == 'main' %}
 			<div id="step-by-step-navigation" class="ui-step-nav ui-step-nav--large ui-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
-				<ol class="app-step-nav__steps"> id= {{ id }}
+				<ol class="app-step-nav__steps">
 						{% for step in params.steps %}
 						<li class="ui-step-nav__step js-step" id="having-your-say-at-the-pre-application-stage-{{ loop.index }}">
 							<div class="ui-step-nav__header js-toggle-panel" data-position="1">
@@ -46,7 +46,7 @@
 				</h2>
 			</div>
 			<div id="step-by-step-navigation-default-ip-guide" class="pins-step-nav app-step-nav">
-				<ol class="app-step-nav__steps">id= {{ id }}
+				<ol class="app-step-nav__steps">
 				{% for step in params.steps %}
 					<li aria-current="step" data-show id="having-your-say-at-pre-application-stage-{{ loop.index }}" class="app-step-nav__step
 						{% if params.currentDefaultStep == loop.index %}
