@@ -2,52 +2,89 @@
 {% set headingLevel = params.headingLevel if params.headingLevel else 2 %}
 {% set headingLink = params.headingLink if params.headingLink else "#" %}
 {% set partOfProcess = params.partOfProcess if params.partOfProcess else true %}
+{% set templateID = params.templateID if params.templateID else 'side' %}
 
-<div class="pins-step-by-step-section-sidebar">
+
 {% if params.useIPDefaultStepByStep %}
-    <div class="app-step-nav-related app-step-nav-related--singular">
-        <h2 class="app-step-nav-related__heading">
-            <span class="app-step-nav-related__pretitle">Part of</span>
-            <a href="{{ params.headingLink | default('/') }}">{{ params.heading }}</a>
-        </h2>
-        {# <span class="pins-step-by-step-navigation-show-all-steps">Show all</span> #}
-    </div>
-    <div id="step-by-step-navigation-default-ip-guide" class="pins-step-nav app-step-nav">
-      <ol class="app-step-nav__steps">
+	{% if templateID == 'main' %}
+		<div id="step-by-step-navigation" class="ui-step-nav ui-step-nav--large ui-step-nav--active" data-show-text="Show" data-hide-text="Hide" data-show-all-text="Show all" data-hide-all-text="Hide all">
+			<ol class="app-step-nav__steps">
+				{% for step in params.steps %}
+					<li class="ui-step-nav__step js-step" id="having-your-say-at-the-pre-application-stage-{{ loop.index }}">
+						<div class="ui-step-nav__header js-toggle-panel" data-position="1">
+							<h2 class="ui-step-nav__title">
+								<span class="ui-step-nav__circle ui-step-nav__circle--number">
+									<span class="ui-step-nav__circle-inner">
+										<span class="ui-step-nav__circle-background">
+											<span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> {{ loop.index }}
+											<span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+										</span>
+									</span>
+								</span>
+								<span class="js-step-title">
+								{{ step.heading.text }}
+							</span>
+							</h2>
+						</div>
+						<div class="ui-step-nav__panel js-panel js-hidden" id="step-panel-having-your-say-at-the-pre-application-stage-1-{{ loop.index }}">
+							{% for para in [step.content.text].flat() %}
+								<p class="app-step-nav__paragraph">{{ para }}</p>
+							{% endfor %}
 
-          {% for step in params.steps %}
-           <li aria-current="step" data-show id="having-your-say-at-pre-application-stage-{{ loop.index }}" class="app-step-nav__step
-            {% if params.currentDefaultStep == loop.index %}
-            app-step-nav__step--active
-            {% endif %}
-            ">
-            <div class="app-step-nav__header " data-position="{{ loop.index }}">
-                <h3 class="app-step-nav__title">
-                    <span class="app-step-nav__circle app-step-nav__circle--number">
-                        <span class="app-step-nav__circle-inner">
-                        <span class="app-step-nav__circle-background">
-                            <span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> {{ loop.index }}
-                            <span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
-                        </span>
-                        </span>
-                    </span>
-                    <span>
-                        {{ step.heading.text }}
-                    </span>
-                </h3>
-            </div>
-            <div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1-{{ loop.index }}">
-                {% for para in [step.content.text].flat() %}
-                    <p class="app-step-nav__paragraph">{{ para }}</p>
-                {% endfor %}
+							{% for link in step.subList %}
+								<p class="app-step-nav__paragraph"><a href="{{ link.href }}" class="app-step-nav__link">{{ link.text }}</a></p>
+							{% endfor %}
+						</div>
+					</li>
+				{% endfor %}
+			</ol>
+		</div>
+	{% else %}
+		<div class="pins-step-by-step-section-sidebar">
+			<div class="app-step-nav-related app-step-nav-related--singular">
+				<h2 class="app-step-nav-related__heading">
+					<span class="app-step-nav-related__pretitle">Part of</span>
+					<a href="{{ params.headingLink | default('/') }}">{{ params.heading }}</a>
+				</h2>
+				{# <span class="pins-step-by-step-navigation-show-all-steps">Show all</span> #}
+			</div>
+			<div id="step-by-step-navigation-default-ip-guide" class="pins-step-nav app-step-nav">
+				<ol class="app-step-nav__steps">
+				{% for step in params.steps %}
+					<li aria-current="step" data-show id="having-your-say-at-pre-application-stage-{{ loop.index }}" class="app-step-nav__step
+						{% if params.currentDefaultStep == loop.index %}
+						app-step-nav__step--active
+						{% endif %}
+						">
+						<div class="app-step-nav__header " data-position="{{ loop.index }}">
+							<h3 class="app-step-nav__title">
+								<span class="app-step-nav__circle app-step-nav__circle--number">
+									<span class="app-step-nav__circle-inner">
+									<span class="app-step-nav__circle-background">
+										<span class="app-step-nav__circle-step-label govuk-visually-hidden">Step</span> {{ loop.index }}
+										<span class="app-step-nav__circle-step-colon govuk-visually-hidden" aria-hidden="true">:</span>
+									</span>
+									</span>
+								</span>
+								<span>
+									{{ step.heading.text }}
+								</span>
+							</h3>
+						</div>
+						<div class="app-step-nav__panel js-panel" id="step-panel-having-your-say-at-pre-application-stage-1-{{ loop.index }}">
+							{% for para in [step.content.text].flat() %}
+								<p class="app-step-nav__paragraph">{{ para }}</p>
+							{% endfor %}
 
-                {% for link in step.subList %}
-                    <p class="app-step-nav__paragraph"><a href="{{ link.href }}" class="app-step-nav__link">{{ link.text }}</a></p>
-                {% endfor %}
-            </div>
-          </li>
-          {% endfor %}
-        </ol>
-    </div>
-  {% endif %}
-</div>
+							{% for link in step.subList %}
+								<p class="app-step-nav__paragraph"><a href="{{ link.href }}" class="app-step-nav__link">{{ link.text }}</a></p>
+							{% endfor %}
+						</div>
+					</li>
+				{% endfor %}
+				</ol>
+			</div>
+		</div>
+	{% endif %}
+{% endif %}
+
