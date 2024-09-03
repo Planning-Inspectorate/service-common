@@ -1,6 +1,6 @@
 {
   "name": "pins-notify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "common notify service ",
   "main": "src/index.js",
   "scripts": {

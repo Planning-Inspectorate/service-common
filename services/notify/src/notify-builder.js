@@ -147,9 +147,10 @@ module.exports = {
    *
    * @see https://docs.notifications.service.gov.uk/node.html#send-an-email-method
    * @returns {Promise<void>}
+   * @throws will throw an error if required data not set or if notify.sendEmail errors
    */
   async sendEmail() {
-    logger.info(`Sending email via notify`);
+    logger.info(`Sending email via Notify`);
 
     logger.debug({
       notifyClient: this.getNotifyClient(),
@@ -162,21 +163,21 @@ module.exports = {
         typeof this.emailReplyToId !== "undefined" ? this.emailReplyToId : "",
     });
 
-    if (!this.templateId) {
-      throw new Error("Template ID must be set before an email can be sent.");
-    }
-
-    if (!this.destinationEmail) {
-      throw new Error(
-        "A destination email address must be set before an email can be sent."
-      );
-    }
-
-    if (!this.reference) {
-      throw new Error("A reference must be set before an email can be sent.");
-    }
-
     try {
+      if (!this.templateId) {
+        throw new Error("Notify: Template ID must be set before an email can be sent.");
+      }
+  
+      if (!this.destinationEmail) {
+        throw new Error(
+          "Notify: A destination email address must be set before an email can be sent."
+        );
+      }
+  
+      if (!this.reference) {
+        throw new Error("Notify: A reference must be set before an email can be sent.");
+      }
+
       const requestData = {
         personalisation: this.templatePersonalisation,
         reference: this.reference,
@@ -192,7 +193,7 @@ module.exports = {
         requestData
       );
     } catch (err) {
-      const message = "Problem sending email";
+      const message = "Notify: error sending email";
       if (err.response) {
         logger.error(
           {
@@ -203,6 +204,7 @@ module.exports = {
           },
           `${message} - response`
         );
+        throw err
       } else if (err.request) {
         logger.error(
           {
@@ -211,9 +213,12 @@ module.exports = {
           },
           `${message} - request`
         );
+        throw err
       } else {
         logger.error({ err }, message);
+        throw err
       }
     }
   },
 };
+
