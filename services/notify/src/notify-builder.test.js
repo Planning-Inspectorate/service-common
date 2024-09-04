@@ -1,26 +1,21 @@
-const mockDebug = jest.fn();
-const mockInfo = jest.fn();
-const mockError = jest.fn();
+const logger = require("./logger");
+const NotifyBuilder = require("./notify-builder");
+const { createNotifyClient } = require("./notify-factory");
 
-jest.doMock("./logger", () => ({
-  debug: mockDebug,
-  info: mockInfo,
-  error: mockError,
+jest.mock("./logger", () => ({
+  debug: jest.fn(),
+  info: jest.fn(),
+  error: jest.fn(),
 }));
 
-const mockNotifySendEmailFn = jest.fn();
-const mockPrepareUploadFn = jest.fn();
+const mockCreateNotifyClient = {
+  prepareUpload: jest.fn(),
+  sendEmail: jest.fn(),
+};
 
-const mockCreateNotifyClient = jest.fn(() => ({
-  prepareUpload: mockPrepareUploadFn,
-  sendEmail: mockNotifySendEmailFn,
-}));
-
-jest.doMock("./notify-factory", () => ({
+jest.mock("./notify-factory", () => ({
   createNotifyClient: () => mockCreateNotifyClient,
 }));
-
-const NotifyBuilder = require("./notify-builder");
 
 describe("lib/notify/notify-builder", () => {
   afterEach(() => {
@@ -51,23 +46,23 @@ describe("lib/notify/notify-builder", () => {
           .setDestinationEmailAddress(destinationEmail)
           .sendEmail();
 
-        expect(mockInfo.mock.calls).toEqual([
+        expect(logger.info.mock.calls).toEqual([
           ["Resetting the notify client"],
-          [`Sending email via notify`],
+          [`Sending email via Notify`],
           ["Notify client was not set. Creating..."],
         ]);
 
-        expect(mockDebug.mock.calls).toEqual([
+        expect(logger.debug.mock.calls).toEqual([
           [{ templateId: "123-abc" }, "Setting template ID"],
           [{ reference: "abc/123" }, "Setting reference"],
           [
             { destinationEmail: "a@b.com" },
             "Setting destination email address",
           ],
-          [{ notifyClient: expect.any(Function) }, "Setting notify client"],
+          [{ notifyClient: mockCreateNotifyClient }, "Setting notify client"],
           [
             {
-              notifyClient: expect.any(Function),
+              notifyClient: mockCreateNotifyClient,
               templateId: "123-abc",
               destinationEmail: "a@b.com",
               templatePersonalisation: "Has 0 value(s) set.",
@@ -76,10 +71,9 @@ describe("lib/notify/notify-builder", () => {
           ],
         ]);
       });
-    });
 
     test("can build and send an email", async () => {
-      const client = mockCreateNotifyClient();
+      const client = createNotifyClient();
 
       await NotifyBuilder.setNotifyClient(client)
         .setTemplateId(templateId)
@@ -88,12 +82,12 @@ describe("lib/notify/notify-builder", () => {
         .setTemplateVariablesFromObject(templatePersonalisation)
         .sendEmail();
 
-      expect(mockInfo.mock.calls).toEqual([
+      expect(logger.info.mock.calls).toEqual([
         ["Resetting the notify client"],
-        [`Sending email via notify`],
+        [`Sending email via Notify`],
       ]);
 
-      expect(mockDebug.mock.calls).toEqual([
+      expect(logger.debug.mock.calls).toEqual([
         [{ notifyClient: client }, "Setting notify client"],
         [{ templateId: "123-abc" }, "Setting template ID"],
         [{ reference: "abc/123" }, "Setting reference"],
@@ -118,7 +112,7 @@ describe("lib/notify/notify-builder", () => {
         ],
       ]);
 
-      expect(mockNotifySendEmailFn).toHaveBeenCalledWith(
+      expect(client.sendEmail).toHaveBeenCalledWith(
         templateId,
         destinationEmail,
         {
@@ -127,40 +121,41 @@ describe("lib/notify/notify-builder", () => {
         }
       );
     });
+  });
 
     describe("sendEmail", () => {
       describe("guards", () => {
-        test("throws if template id is not set", async () => {
+        test("logs and throws if template id is not set", async () => {
+          const error = new Error("Notify: Template ID must be set before an email can be sent.")
           try {
             await NotifyBuilder.sendEmail();
           } catch (e) {
+            expect(logger.error).toHaveBeenCalledWith({err: e}, 'Notify: error sending email')
             expect(e).toEqual(
-              new Error("Template ID must be set before an email can be sent.")
+              error
             );
           }
         });
 
-        test("throws if destination email address is not set", async () => {
+        test("logs and throws if destination email address is not set", async () => {
+          const error = new Error('Notify: A destination email address must be set before an email can be sent.')
           try {
             await NotifyBuilder.setTemplateId("123").sendEmail();
           } catch (e) {
-            expect(e).toEqual(
-              new Error(
-                "A destination email address must be set before an email can be sent."
-              )
-            );
+            expect(logger.error).toHaveBeenCalledWith({err: error}, 'Notify: error sending email')
+            expect(e).toEqual(error);
           }
         });
 
-        test("throws if reference is not set", async () => {
+        test("logs and throws if reference is not set", async () => {
+          const error = new Error("Notify: A reference must be set before an email can be sent.")
           try {
             await NotifyBuilder.setTemplateId("123")
               .setDestinationEmailAddress("abc@example.com")
               .sendEmail();
           } catch (e) {
-            expect(e).toEqual(
-              new Error("A reference must be set before an email can be sent.")
-            );
+            expect(logger.error).toHaveBeenCalledWith({err: error}, 'Notify: error sending email')
+            expect(e).toEqual(error);
           }
         });
       });
@@ -170,9 +165,9 @@ describe("lib/notify/notify-builder", () => {
       test("prepares the upload", () => {
         const fileValue = "File object, or Buffer value goes here.";
         NotifyBuilder.setNotifyClient(
-          mockCreateNotifyClient()
+          mockCreateNotifyClient
         ).addFileToTemplateVariables("file key", fileValue);
-        expect(mockPrepareUploadFn).toHaveBeenCalledWith(fileValue);
+        expect(mockCreateNotifyClient.prepareUpload).toHaveBeenCalledWith(fileValue);
       });
     });
 
@@ -180,7 +175,7 @@ describe("lib/notify/notify-builder", () => {
       test("with redact", () => {
         NotifyBuilder.setTemplateVariable("a key", "a value");
 
-        expect(mockDebug.mock.calls).toEqual([
+        expect(logger.debug.mock.calls).toEqual([
           [
             {
               key: "a key",
@@ -194,7 +189,7 @@ describe("lib/notify/notify-builder", () => {
       test("without redact", () => {
         NotifyBuilder.setTemplateVariable("a key", "a value", false);
 
-        expect(mockDebug.mock.calls).toEqual([
+        expect(logger.debug.mock.calls).toEqual([
           [
             {
               key: "a key",
@@ -206,12 +201,12 @@ describe("lib/notify/notify-builder", () => {
       });
     });
 
-    describe("err", () => {
+    describe("err - logs and throws", () => {
       [
         {
           description: "err.response",
           setUp: () => {
-            mockNotifySendEmailFn.mockRejectedValue({
+            mockCreateNotifyClient.sendEmail.mockRejectedValue({
               response: {
                 data: "some bad response",
                 status: 500,
@@ -223,7 +218,7 @@ describe("lib/notify/notify-builder", () => {
             });
           },
           expectation: () => {
-            expect(mockError).toHaveBeenCalledWith(
+            expect(logger.error).toHaveBeenCalledWith(
               {
                 message: "everything went badly",
                 data: "some bad response",
@@ -232,14 +227,22 @@ describe("lib/notify/notify-builder", () => {
                   a: "b",
                 },
               },
-              `Problem sending email - response`
+              `Notify: error sending email - response`
             );
           },
+          error: { response: {
+            data: "some bad response",
+            status: 500,
+            headers: {
+              a: "b",
+            },
+          },
+          message: "everything went badly"}
         },
         {
           description: "err.request",
           setUp: () => {
-            mockNotifySendEmailFn.mockRejectedValue({
+            mockCreateNotifyClient.sendEmail.mockRejectedValue({
               request: {
                 a: "b",
               },
@@ -247,48 +250,57 @@ describe("lib/notify/notify-builder", () => {
             });
           },
           expectation: () => {
-            expect(mockError).toHaveBeenCalledWith(
+            expect(logger.error).toHaveBeenCalledWith(
               {
                 message: "something bad in request",
                 request: {
                   a: "b",
                 },
               },
-              `Problem sending email - request`
+              `Notify: error sending email - request`
             );
           },
+          error: {
+            request: {
+              a: "b",
+            },
+            message: "something bad in request",
+          }
         },
         {
           description: "else",
           setUp: () => {
-            mockNotifySendEmailFn.mockRejectedValue({
+            mockCreateNotifyClient.sendEmail.mockRejectedValue({
               message: "something else",
             });
           },
           expectation: () => {
-            expect(mockError).toHaveBeenCalledWith(
+            expect(logger.error).toHaveBeenCalledWith(
               {
                 err: {
                   message: "something else",
                 },
               },
-              `Problem sending email`
+              `Notify: error sending email`
             );
           },
+          error: { message: 'something else'}
         },
-      ].forEach(({ description, setUp, expectation }) => {
+      ].forEach(({ description, setUp, expectation, error }) => {
         test(description, async () => {
           setUp();
 
-          await NotifyBuilder.setNotifyClient(mockCreateNotifyClient())
+          try {
+          await NotifyBuilder.setNotifyClient(mockCreateNotifyClient)
             .setTemplateId(templateId)
             .setReference(reference)
             .setDestinationEmailAddress(destinationEmail)
             .setTemplateVariablesFromObject(templatePersonalisation)
             .setEmailReplyToId(emailReplyToId)
             .sendEmail();
+          } catch (err) {
 
-          expect(mockNotifySendEmailFn).toHaveBeenCalledWith(
+          expect(mockCreateNotifyClient.sendEmail).toHaveBeenCalledWith(
             templateId,
             destinationEmail,
             {
@@ -299,6 +311,10 @@ describe("lib/notify/notify-builder", () => {
           );
 
           expectation();
+
+          expect(err).toEqual(error)
+
+        }
         });
       });
     });
