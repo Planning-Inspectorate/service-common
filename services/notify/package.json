@@ -1,5 +1,5 @@
 {
-  "name": "pins-notify",
+  "name": "@planning-inspectorate/pins-notify",
   "version": "1.0.3",
   "description": "common notify service ",
   "main": "src/index.js",

@@ -1,5 +1,5 @@
 {
-  "name": "pins-magic-link",
+  "name": "@planning-inspectorate/pins-magic-link",
   "version": "1.0.0",
   "description": "Magic Link Generation and Verification",
   "main": "src/index.js",

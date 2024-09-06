@@ -1,5 +1,5 @@
 {
-  "name": "pins-google-tag-manager",
+  "name": "@planning-inspectorate/pins-google-tag-manager",
   "version": "1.0.0",
   "description": "code for granting and denying consent for google tag manager",
   "main": "index.js",
