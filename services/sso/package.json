@@ -1,5 +1,5 @@
 {
-  "name": "pins-sso",
+  "name": "@planning-inspectorate/pins-sso",
   "version": "1.0.7",
   "description": "single sign on for pins back-office and other services",
   "main": "src/index.js",

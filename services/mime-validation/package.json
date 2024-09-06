@@ -1,5 +1,5 @@
 {
-  "name": "pins-mime-validation",
+  "name": "@planning-inspectorate/pins-mime-validation",
   "version": "1.0.0",
   "description": "validates mime types",
   "main": "src/index.js",
