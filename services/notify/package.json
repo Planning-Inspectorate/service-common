@@ -10,7 +10,7 @@
     "test": "jest --coverage --maxWorkers=4"
   },
   "dependencies": {
-    "notifications-node-client": "^5.1.0",
+    "notifications-node-client": "^8.2.1",
     "pino": "^6.7.0"
   },
   "devDependencies": {
