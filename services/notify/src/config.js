@@ -7,16 +7,16 @@
  */
 
 module.exports = {
-  logger: {
-    level: process.env.LOGGER_LEVEL || "info",
-    redact: ["config.services.notify.apiKey"],
-  },
-  services: {
-    notify: {
-      // TODO - Replace these with correct environment variables now now using k8s/charts
-      baseUrl: "http://mock-notify:3000",
-      serviceId: "dummy-service-id-for-notify",
-      apiKey: "dummy-api-key-for-notify",
-    },
-  },
+	logger: {
+		level: process.env.LOGGER_LEVEL || 'info',
+		redact: ['config.services.notify.apiKey']
+	},
+	services: {
+		notify: {
+			// TODO - Replace these with correct environment variables now now using k8s/charts
+			baseUrl: 'http://mock-notify:3000',
+			serviceId: 'dummy-service-id-for-notify',
+			apiKey: 'dummy-api-key-for-notify'
+		}
+	}
 };

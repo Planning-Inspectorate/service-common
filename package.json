@@ -9,7 +9,7 @@
     "commitlint": "commitlint",
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "format": "prettier --write './**/*.js'",
+    "format": "prettier --write .",
     "format-check": "prettier --check ."
   },
   "devDependencies": {
