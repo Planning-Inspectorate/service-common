@@ -1,0 +1,8 @@
+node_modules
+package.json
+package-lock.json
+README.md
+*.njk
+.env*
+# fails to parse
+services/pins-components/pins/components/header/header.js
