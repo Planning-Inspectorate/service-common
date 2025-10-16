@@ -7,7 +7,6 @@
   "scripts": {
     "lint": "eslint ./",
     "lint:fix": "eslint ./ --fix",
-    "format": "prettier --write './**/*.js'",
     "test": "jest --coverage --maxWorkers=4",
     "dev": "node ./src/dev.js"
   },
@@ -17,15 +16,8 @@
     "pino-pretty": "^8.1.0"
   },
   "devDependencies": {
-    "eslint": "^7.11.0",
-    "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-config-prettier": "^6.14.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.0",
-    "eslint-plugin-prettier": "^3.1.4",
     "jest": "^30.2.0",
-    "lint-staged": "^10.5.0",
-    "prettier": "^2.1.2"
+    "lint-staged": "^10.5.0"
   },
   "repository": {
     "type": "git",
