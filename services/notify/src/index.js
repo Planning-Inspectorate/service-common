@@ -1,7 +1,7 @@
-const notifyBuilder = require("./notify-builder");
-const createNotifyClient = require("./notify-factory");
+const notifyBuilder = require('./notify-builder');
+const createNotifyClient = require('./notify-factory');
 
 module.exports = {
-  notifyBuilder,
-  createNotifyClient,
+	notifyBuilder,
+	createNotifyClient
 };

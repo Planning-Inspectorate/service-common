@@ -1,5 +1,5 @@
 const eslint = require('@eslint/js');
-const {defineConfig, globalIgnores } = require('eslint/config');
+const { defineConfig, globalIgnores } = require('eslint/config');
 const eslintConfigPrettier = require('eslint-config-prettier');
 const globals = require('globals');
 
@@ -11,13 +11,13 @@ module.exports = defineConfig([
 		'node_modules/**',
 		'**/*.test.js',
 		'**/.static/**',
-      'services/pins-components/pins/components/**/*.js' // fails to parse for some reason
+		'services/pins-components/pins/components/**/*.js' // fails to parse for some reason
 	]),
 	eslintConfigPrettier,
-  {
-    languageOptions: {
-      sourceType: 'commonjs',
-      globals: globals.node
-    }
-  }
+	{
+		languageOptions: {
+			sourceType: 'commonjs',
+			globals: globals.node
+		}
+	}
 ]);

@@ -1,4 +1,4 @@
-const capitalizeString = require("./capitalizeString");
+const capitalizeString = require('./capitalizeString');
 
 /**
  * Capitalize all words for the display address
@@ -7,15 +7,13 @@ const capitalizeString = require("./capitalizeString");
  * @returns {string}
  */
 module.exports = (rawAddress) => {
-  // additional info, number, road, town, postcode
-  const addressParts = rawAddress.split(", ");
+	// additional info, number, road, town, postcode
+	const addressParts = rawAddress.split(', ');
 
-  let formattedAddress = addressParts
-    .slice(0, -1)
-    .reduce((previousParts, currentPart) => {
-      return `${previousParts}${capitalizeString(currentPart).slice(0, -1)}, `;
-    }, "");
-  formattedAddress += addressParts[addressParts.length - 1];
+	let formattedAddress = addressParts.slice(0, -1).reduce((previousParts, currentPart) => {
+		return `${previousParts}${capitalizeString(currentPart).slice(0, -1)}, `;
+	}, '');
+	formattedAddress += addressParts[addressParts.length - 1];
 
-  return formattedAddress;
+	return formattedAddress;
 };
