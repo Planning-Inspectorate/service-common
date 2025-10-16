@@ -1,3 +1,3 @@
-const findAddressListByPostcode = require("./services/findAddressListByPostcode");
+const findAddressListByPostcode = require('./services/findAddressListByPostcode');
 
 module.exports = { findAddressListByPostcode };
