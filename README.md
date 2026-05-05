@@ -1,3 +1,6 @@
+> This repository contains legacy code and is no longer supported or maintained.
+> It will be archived.
+
 # service-common
 
 ## About
